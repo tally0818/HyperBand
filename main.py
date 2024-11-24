@@ -1,9 +1,8 @@
-from search_space import SearchSpace
-from HyperBand import HyperBand
-from Models import BaseModel
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
+from search_space import SearchSpace
+from HyperBand import HyperBand
 
 
 mnist_train = datasets.MNIST(root="../Data/", train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
@@ -39,5 +38,5 @@ space_config = {'lr' : {'distribution' : 'log_uniform',
                 }
 search_space = SearchSpace(space_config)
 
-opt_config = HyperBand(search_space, 5, 3, train_loader, test_loader)
-print(opt_config)
+hyperband_opt = HyperBand(R = 5, eta =3)
+best_config, best_loss = hyperband_opt.optimize(search_space, train_loader, test_loader)
