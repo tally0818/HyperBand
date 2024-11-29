@@ -1,8 +1,10 @@
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
-from search_space import SearchSpace
-from HyperBand import HyperBand
+from HyperBand import *
+from RandomSearch import RandomSearch
+import matplotlib.pyplot as plt
+from Models import BaseModel
 
 
 mnist_train = datasets.MNIST(root="../Data/", train=True, transform=transforms.ToTensor(), target_transform=None, download=True)
@@ -38,5 +40,39 @@ space_config = {'lr' : {'distribution' : 'log_uniform',
                 }
 search_space = SearchSpace(space_config)
 
-hyperband_opt = HyperBand(R = 5, eta =3)
-best_config, best_loss = hyperband_opt.optimize(search_space, train_loader, test_loader)
+R_values = list(range(15, 301, 15))
+hyperband_best_losses = []
+randomsearch_best_losses = []
+randomsearch_2x_best_losses = []
+bracket_best_losses = []
+
+for R in R_values:
+
+    hyperband_opt = HyperBand(R=R, eta=3)
+    best_config_hb, best_loss_hb = hyperband_opt.optimize(BaseModel, search_space, train_loader, test_loader)
+    hyperband_best_losses.append(best_loss_hb)
+
+    randomsearch_opt = RandomSearch(R=R, eta=3)
+    best_config_rs, best_loss_rs = randomsearch_opt.optimize(BaseModel, search_space, train_loader, test_loader)
+    randomsearch_best_losses.append(best_loss_rs)
+
+    randomsearch_2x_opt = RandomSearch(R=2*R, eta=3)
+    best_config_rs_2x, best_loss_rs_2x = randomsearch_2x_opt.optimize(BaseModel, search_space, train_loader, test_loader)
+    randomsearch_2x_best_losses.append(best_loss_rs_2x)
+
+    bracket_opt =Bracket(R = R, eta = 3, s = 4)
+    best_config_bracket_opt, best_loss_bracket_opt = bracket_opt.optimize(BaseModel, search_space, train_loader, test_loader)
+    bracket_best_losses.append(best_loss_rs_2x)
+
+
+plt.figure(figsize=(10, 6))
+plt.plot(R_values, hyperband_best_losses, label='HyperBand')
+plt.plot(R_values, randomsearch_best_losses, label='RandomSearch')
+plt.plot(R_values, randomsearch_2x_best_losses, label='RandomSearch_2x')
+plt.plot(R_values, bracket_best_losses, label='bracket(s = 4)')
+plt.xlabel('R')
+plt.ylabel('Best Loss')
+plt.title('HyperBand vs. Others (eta = 3)')
+plt.legend()
+plt.grid(True)
+plt.show()
