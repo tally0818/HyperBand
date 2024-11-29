@@ -33,3 +33,7 @@ This is because there is no exchange of information obtained when Hyperband pull
   
 
  In my code, I implemented SearchSpace, HyperBand, Optimized\_HyperBand, Bracket and RandomSearch. First, SearchSpace is the part where the user can sample each configuration by determining each hyperparameter's distribution. Second, HyperBand is the same Hyperband algorithm proposed in the paper but using wall clock time as a resoure(specifically, HyperBand is implemented for all types of resources but, Trainiers our implemented about time). The Optimized\_HyperBand is the version that remembers each configuration's trained state. Next, Bracket is the modified Hyperband that tries the most explorative bracket several times. At last, RandomSearch is implemented based on $R, \eta$,  instead of n, the number of configurations RandomSearch will try. This is to make a Fair comparison with the HyperBand algorithm. When RandomSearch gets $R, \eta$ as a input, it computes $n$ to try $n$ configurations with the same total resource and same average resource per configuration with $HyperBand(R,\eta)$. An example of usage is at main.py.
+
+
+
+  Any questions or feedback is welcome
