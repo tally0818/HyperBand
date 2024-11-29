@@ -14,6 +14,8 @@
 
  The main idea of the Hyperband algorithm is trying _Successive Halving algorithms_ on different _“exploration vs. exploitation trade-offs”_ while the total budget of resources is fixed. According to the paper, testing 5 different trade-offs will be reasonable. The pseudo-code of HyperBand follows.
 
+
+![Pseudo-Code](/pseudo_code.png)
   
 
  By numerically analyzing the pseudo code, we can find out that $R_{tot} = R( s_{max} + 1)^{2}$ total resources are allocated when the single HyperBand(R,) is called, and this algorithm considers ntot\=s=0smaxceil(smax+1s+1s) numbers of different configurations and for last, the configuration with the maximum resource will be allocated total Rmax\=R\-\-smax\-1 resources. At this moment, we can find out that the maximum resource assigned to a single configuration contradicts with the definition of R. We can fix this problem by modifying the code to remember each configuration's trained state. By making this change, we can optimize the total resource allocated to a single call as Roptimized tot\=(1-1)R(smax+1)2+1R(smax+1)ln(smax) and maximum resource allocated to a single configuration as R. By optimizing like this, it is essentially the same as HyperBand, but the total resources during execution are reduced. This is expected to save time in cases where large-scale models or long learning times are required. However, for petite models or short training times, the benefits are expected to be offset by storage/load overhead.
