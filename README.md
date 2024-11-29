@@ -22,7 +22,7 @@
 
   
 
- Now let's get back to our reference paper. To compare HyperBand’s performance with other techniques, our authors designed an experiment comparing HyperBand’s performance with 3 well-known Bayesian optimization algorithms - SMAC, TPE, Spearmint, random(random search), random\_2x(random search with the twice or total resources), bracket s= 4 (repeating the most exploratory bracket 4 times) while using iterations, data set subsamples, and feature samples as a resource. The performance was evaluated using LeNet on CIFAR-10, SVHN, and MRBI datasets. One of the results follows.
+ Now let's get back to our reference paper. To compare HyperBand’s performance with other techniques, our authors designed an experiment comparing HyperBand’s performance with 3 well-known Bayesian optimization algorithms - SMAC, TPE, Spearmint, random(random search), random\_2x(random search with the twice of total resources), bracket s= 4 (repeating the most exploratory bracket 4 times) while using iterations, data set subsamples, and feature samples as a resource. The performance was evaluated using LeNet on CIFAR-10, SVHN, and MRBI datasets. One of the results follows.
 
   
 
