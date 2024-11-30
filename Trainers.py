@@ -52,7 +52,7 @@ class Optimized_ModelTrainer:
     def __init__(self, device: torch.device):
         self.device = device
         self.loss_func = nn.CrossEntropyLoss()
-        self.model_states = {}  # 각 설정에 대한 모델 상태를 저장
+        self.model_states = {}  
 
     def get_config_key(self, config: Dict) -> str:
 
