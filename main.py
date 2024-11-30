@@ -62,7 +62,7 @@ for R in R_values:
 
     bracket_opt =Bracket(R = R, eta = 3, s = 4)
     best_config_bracket_opt, best_loss_bracket_opt = bracket_opt.optimize(BaseModel, search_space, train_loader, test_loader)
-    bracket_best_losses.append(best_loss_rs_2x)
+    bracket_best_losses.append(bracket_best_losses)
 
 
 plt.figure(figsize=(10, 6))
