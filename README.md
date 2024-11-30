@@ -15,7 +15,7 @@
  The main idea of the Hyperband algorithm is trying _Successive Halving algorithms_ on different _“n vs. B/n trade-offs”_ while the total budget of resources B is fixed. According to the paper, testing 5 different trade-offs will be reasonable. The pseudo-code of HyperBand follows.
 
 
-![Pseudo-Code](/pseudo_code.png)
+![Pseudo-Code](/imgs/pseudo_code.png)
   
 
  By numerically analyzing the pseudo code, we can find out that $R_{tot} = R( s_{max} + 1)^{2}$ total resources are allocated when the single $HyperBand(R,\eta)$ is called, and this algorithm considers $n_{tot}=\sum_{s=0}^{s_{max}}\left\lceil \frac{s_{max}+1}{s + 1}\eta^{s} \right\rceil$ numbers of different configurations and for last, the configuration with the maximum resource will be allocated total $R_{max}=R\frac{\eta-\eta^{s_{max}}}{\eta-1}$ resources. At this moment, we can find out that the maximum resource assigned to a single configuration contradicts with the definition of R. We can fix this problem by modifying the code to remember each configuration's trained state. By making this change, we can optimize the total resource allocated to a single call as $R_{optimized \ tot}=(1-\frac{1}{\eta})R(s_{max}+1)^{2}+\frac{1}{\eta}R(s_{max}+1)ln(s_{max})$ and maximum resource allocated to a single configuration as $R$. By optimizing like this, it is essentially the same as HyperBand, but the total resources during execution are reduced. This is expected to save time in cases where large-scale models or long learning times are required. However, for petite models or short training times, the benefits are expected to be offset by storage/load overhead.
@@ -24,7 +24,7 @@
 
  Now let's get back to our reference paper. To compare HyperBand’s performance with other techniques, our authors designed an experiment comparing HyperBand’s performance with 3 well-known Bayesian optimization algorithms - SMAC, TPE, Spearmint, random(random search), random\_2x(random search with the twice of total resources), bracket s= 4 (repeating the most exploratory bracket 4 times) while using iterations, data set subsamples, and feature samples as a resource. The performance was evaluated using LeNet on CIFAR-10, SVHN, and MRBI datasets. One of the results follows.
 
-![](/example.png)
+![](/imgs/example.png)
 
  As you can see from the results of previous experiments, we are exploring various “n vs B/n trade-offs”. As a result, faster convergence is possible than Bayesian Optimization. Therefore, good performance can be achieved efficiently in environments where model tuning time is limited. However, in unrestricted environments, existing optimization techniques yield higher performance.
 
