@@ -12,7 +12,7 @@
 
   
 
- The main idea of the Hyperband algorithm is trying _Successive Halving algorithms_ on different _“exploration vs. exploitation trade-offs”_ while the total budget of resources is fixed. According to the paper, testing 5 different trade-offs will be reasonable. The pseudo-code of HyperBand follows.
+ The main idea of the Hyperband algorithm is trying _Successive Halving algorithms_ on different _“n vs. B/n trade-offs”_ while the total budget of resources B is fixed. According to the paper, testing 5 different trade-offs will be reasonable. The pseudo-code of HyperBand follows.
 
 
 ![Pseudo-Code](/pseudo_code.png)
@@ -26,7 +26,7 @@
 
 ![](/example.png)
 
- As you can see from the results of previous experiments, we are exploring various “exploration vs exploitation trade-offs”. As a result, faster convergence is possible than Bayesian Optimization. Therefore, good performance can be achieved efficiently in environments where model tuning time is limited. However, in unrestricted environments, existing optimization techniques yield higher performance.
+ As you can see from the results of previous experiments, we are exploring various “n vs B/n trade-offs”. As a result, faster convergence is possible than Bayesian Optimization. Therefore, good performance can be achieved efficiently in environments where model tuning time is limited. However, in unrestricted environments, existing optimization techniques yield higher performance.
 
 This is because there is no exchange of information obtained when Hyperband pulls (train\_and\_return\_loss) each arm (configuration). To solve this, approaches such as BOHB exist. In my opinion, the attempt to incorporate Contextual Bandit also looks good.
 
