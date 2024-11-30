@@ -82,7 +82,7 @@ class Optimized_HyperBand:
         """Run a single trial with given configuration and resource allocation"""
         config_key = self.trainer.get_config_key(config)
 
-        # 이전 모델 상태가 있으면 복원, 없으면 새로 초기화
+        
         if config_key in self.trainer.model_states:
             model = model_class(config).to(self.device)
             model.load_state_dict(self.trainer.model_states[config_key]['state_dict'])
@@ -91,7 +91,7 @@ class Optimized_HyperBand:
             model = model_class(config).to(self.device)
             total_trained_time = 0
 
-        # 추가 시간만큼만 더 학습
+
         self.trainer.train_model(model, config, resource, train_loader, total_trained_time)
         return self.trainer.evaluate_model(model, test_loader)
 
