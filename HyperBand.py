@@ -155,7 +155,7 @@ class Bracket:
                  search_space: SearchSpace,
                  train_loader: torch.utils.data.DataLoader,
                  test_loader: torch.utils.data.DataLoader) -> Tuple[Dict, float]:
-        """Main HyperBand optimization loop"""
+        """Main optimization loop"""
         s_max = int(np.floor(np.log(self.R) / np.log(self.eta)))
         B = (s_max + 1) * self.R
 
